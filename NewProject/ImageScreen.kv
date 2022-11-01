@@ -1,0 +1,13 @@
+<ImageScreen>:
+    name: "image"
+    FloatLayout:
+        size_hint: None, None
+
+    DPEAButton:
+        #Go back button (with an image)
+        size: 175, 100
+        text: "Back to main.py"
+        center_x: root.width * 0.35
+        center_y: root.height * 0.5
+        color: 0.035, 0.52, 0.725, 1
+        on_press: root.transition_back()

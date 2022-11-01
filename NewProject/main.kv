@@ -5,32 +5,103 @@
     FloatLayout:
         size_hint: None, None
 
-    DPEAButton:
-        id: test_button
-        text: 'test'
-        size: 100, 100
-        x: root.width * 0.75
-        y: root.height * 0.5
-        color: 0, 1, 0, 1
-        on_press: root.pressed()
+    Slider
+        x: root.width * 0
+        y: root.height * .10
+        id: slider
+        min: 0
+        max: 100
+        step: 1
+        oreintation: "horizontal"
+        text: "position"
 
-    DPEAButton:
-        text: "test2"
-        size: 100, 100
-        x: root.width * 0.25
-        y: root.height * 0.5
-        color: 1, 0, 0, 1
-        on_press: root.pressed()
+    Label:
+        size: 40, 30
+        id: sliderPosition
+        x: root.width * 0
+        y: root.height * .25
+        text: str(slider.value)
+        color: .5, .5, .25, 1
 
-    SelfUpdatingLabel:
-        id: time_label
-        size_hint: None, None
-        font_size: 30
-        update_property: time.now
-        update_property_parameters: None
-        center_x: root.width * 0.5
-        center_y: root.height * 0.45
-        color: 1, 1, 1, 1
-        bold: True
-        outline_width: self.font_size * 0.1
-        outline_color: 0, 0, 0
+        DPEAButton:
+            id: btn
+            size: 100, 100
+            x: root.width * .5
+            y: root.height * .5
+            text: "Off" if btn.state == "normal" else "On"
+            color: .8, .8, .5, 1
+
+        DPEAButton:
+            id: count
+            size: 100, 100
+            clicks: 0
+            x: root.width * .25
+            y: root.height * .25
+            on_press: root.counterButton()
+            text: str(root.ids.count.clicks)
+            color: .25, .25, .85, 1
+
+        DPEAButton:
+            id: motor
+            size: 100, 100
+            clicks: 0
+            x: root.width * .10
+            y: root.height * .10
+            text: "Motor Control"
+            color: .5, .5, .85, 1
+
+        DPEAButton:
+            id: motorOutput
+            size: 100, 100
+            clicks: 0
+            x: root.width * .1
+            y: root.height * .15
+            text: "Off" if motor.state == "normal" else "On"
+            color: .5, .5, .85, 1
+
+        DPEAButton:
+            id: image
+            x: root.width * .75
+            y: root.height * .25
+            color: .25, .5, .75, 1
+            text: "ag"
+            on_press: app.root.current = "image"
+
+        DPEAButton:
+            id: test_button
+            text: 'test'
+            size: 100, 100
+            x: root.width * 0.75
+            y: root.height * 0.5
+            color: 0, 1, 0, 1
+            on_press: root.pressed()
+
+        DPEAButton:
+            text: "test2"
+            size: 100, 100
+            x: root.width * 0.25
+            y: root.height * 0.5
+            color: 1, 0, 0, 1
+            on_press: root.pressed()
+
+        SelfUpdatingLabel:
+            id: time_label
+            size_hint: None, None
+            font_size: 30
+            update_property: time.now
+            update_property_parameters: None
+            center_x: root.width * 0.5
+            center_y: root.height * 0.45
+            color: 1, 1, 1, 1
+            bold: True
+            outline_width: self.font_size * 0.1
+            outline_color: 1, 0, 1
+
+            Image:
+                source: "/home/student/Picures/avatars-000180853146-cnh3h9-t500x500.jpg"
+
+
+
+
+
+
