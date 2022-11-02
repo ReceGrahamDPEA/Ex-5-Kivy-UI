@@ -60,12 +60,33 @@
             color: .5, .5, .85, 1
 
         DPEAButton:
+            size: 200, 200
             id: image
             x: root.width * .75
             y: root.height * .25
             color: .25, .5, .75, 1
             text: "ag"
-            on_press: app.root.current = "image"
+            on_release: app.root.current = "image"
+
+            Image:
+                source: "/home/pi/Documents/Rece/NewProject/ChefBoyardee.jpg"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                size: 200, 200
+
+        DPEAButton:
+            size: 150, 150
+            id: movingImage
+            x: root.width * .75
+            y: root.height * .10
+            on_press: root.basicAnimation(self)
+
+            Image:
+                source: "/home/pi/Documents/Rece/NewProject/ChefBoyardee.jpg"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                size: 150, 150
+
 
         DPEAButton:
             id: test_button
@@ -97,8 +118,7 @@
             outline_width: self.font_size * 0.1
             outline_color: 1, 0, 1
 
-            Image:
-                source: "/home/student/Picures/avatars-000180853146-cnh3h9-t500x500.jpg"
+
 
 
 

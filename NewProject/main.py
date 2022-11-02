@@ -4,6 +4,7 @@ os.environ['DISPLAY'] = ":0.0"
 os.environ['KIVY_WINDOW'] = 'egl_rpi'
 
 from kivy.app import App
+from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -30,8 +31,7 @@ MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 IMAGE_SCREEN_NAME = 'image'
 
-class WindowManager (ScreenManager):
-    pass
+
 
 class ProjectNameGUI(App):
 
@@ -45,6 +45,8 @@ class ProjectNameGUI(App):
         :return: Kivy Screen Manager instance
         """
         return SCREEN_MANAGER
+
+
 
 
 Window.clearcolor = (1, 1, 1, 1)  # White
@@ -77,7 +79,12 @@ class MainScreen(Screen):
         """
         SCREEN_MANAGER.current = 'passCode'
 
+    def basicAnimation(self, widget):
 
+        animation = Animation(pos=(100, 100), t = 'out_bounce')
+
+        animation.start(widget)
+        print("bless you")
 
 class ImageScreen(Screen):
 
@@ -133,6 +140,7 @@ class AdminScreen(Screen):
         :return: None
         """
         quit()
+
 
 
 """
