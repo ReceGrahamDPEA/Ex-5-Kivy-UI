@@ -4,13 +4,27 @@
         size_hint: None, None
 
 
-    DPEAButton:
-        #Go back button (with an image)
-        size: 175, 100
-        text: "Back to main.py"
-        text_color: 1, .5, 0 , 1
-        center_x: root.width * 0.5
-        center_y: root.height * 0.5
-        color: 0.035, 0.52, 0.725, 1
-        on_press: root.complexAnimation(self)
-        size: 200, 200
+    Button:
+        size_hint: None,None
+        background_color: 0, 0, 0, 0
+        background_normal: ''
+        canvas:
+            BorderImage:
+                border: 25, 25, 25, 25
+                source: self.parent.shadow_path
+                pos: self.parent.x, self.parent.y - 11
+                size: self.parent.width + 11, self.parent.height + 11
+            Color:
+                rgba: self.parent.color
+            RoundedRectangle:
+                pos: self.parent.pos
+                size: self.parent.size
+
+        Label:
+            text: self.parent.parent.text
+            font_size: self.parent.parent.height * 0.45
+            color: 1, 1, 1, 1
+            bold: True
+            outline_width: self.font_size * 0.1
+            outline_color: 0, 0, 0
+            center: self.parent.parent.center
