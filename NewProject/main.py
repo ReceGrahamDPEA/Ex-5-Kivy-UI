@@ -1,4 +1,5 @@
 import os
+import os.path
 import time
 import logging
 import threading
@@ -37,6 +38,8 @@ ADMIN_SCREEN_NAME = 'admin'
 IMAGE_SCREEN_NAME = 'image'
 ANIMATED_SCREEN_NAME = 'animated'
 
+dpea_button_kv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "", "DPEAButton.kv")
+Builder.load_file(dpea_button_kv_path)
 
 class ProjectNameGUI(App):
 
