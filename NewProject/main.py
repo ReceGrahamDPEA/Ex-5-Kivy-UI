@@ -2,6 +2,7 @@ import os
 import time
 import logging
 import threading
+import pygame
 
 os.environ['DISPLAY'] = ":0.0"
 os.environ['KIVY_WINDOW'] = 'egl_rpi'
@@ -12,15 +13,15 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.slider import Slider
+from kivy.properties import ObjectProperty
 
 from pidev.MixPanel import MixPanel
+from pidev.Joystick import Joystick
 from pidev.kivy.PassCodeScreen import PassCodeScreen
 from pidev.kivy.PauseScreen import PauseScreen
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 from pidev.kivy.selfupdatinglabel import SelfUpdatingLabel
-
-from kivy.properties import ObjectProperty
 
 import time as timetime
 from datetime import datetime
@@ -35,6 +36,10 @@ MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 IMAGE_SCREEN_NAME = 'image'
 ANIMATED_SCREEN_NAME = 'animated'
+
+pygame.init()
+joy = Joystick(0, True)
+print(joy.get_axis('x'), joy.get_axis('y'))
 
 
 class ProjectNameGUI(App):
