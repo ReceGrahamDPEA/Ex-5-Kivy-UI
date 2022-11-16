@@ -1,7 +1,6 @@
 import os
 import time
 import logging
-import threading
 import pygame
 
 os.environ['DISPLAY'] = ":0.0"
@@ -14,6 +13,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.slider import Slider
 from kivy.properties import ObjectProperty
+from kivy.clock import Clock
 
 from pidev.MixPanel import MixPanel
 from pidev.Joystick import Joystick
@@ -23,8 +23,9 @@ from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 from pidev.kivy.selfupdatinglabel import SelfUpdatingLabel
 
-import time as timetime
+from time import sleep
 from datetime import datetime
+from threading import Thread
 
 time = datetime
 
@@ -37,10 +38,11 @@ ADMIN_SCREEN_NAME = 'admin'
 IMAGE_SCREEN_NAME = 'image'
 ANIMATED_SCREEN_NAME = 'animated'
 
-pygame.init()
-joy = Joystick(0, True)
-print(joy.get_axis('x'), joy.get_axis('y'))
 
+#pygame and joystick set up
+
+pygame.init()
+joy = Joystick(number = 0, ssh_deploy=True)
 
 class ProjectNameGUI(App):
 
@@ -55,47 +57,57 @@ class ProjectNameGUI(App):
         """
         return SCREEN_MANAGER
 
-
 Window.clearcolor = (1, 1, 1, 1)  # White
 
 
 class MainScreen(Screen):
 
-    Builder.load_file('AnimatedButtonScreen.kv')
+   clicks = ObjectProperty()
+   joy_x_val = ObjectProperty()
+   joy_y_val = ObjectProperty()
 
-    clicks = ObjectProperty()
+   """
+   Class to handle the main screen and its associated touch events
+   """
 
-    """
-    Class to handle the main screen and its associated touch events
-    """
+   def joy_update(self):
+       while True:
+           self.joy_x_val = joy.get_axis('x')
+           self.ids.joy_label.x = (self.joy_x_val+1)/2 * 1000 + 200
+           self.ids.joy_trigger_label.text = str(joy.get_button_state(0))
+           sleep(.1)
 
-    def counterButton(self):
-        self.ids.count.clicks += 1
-        self.ids.count.txt = str(self.ids.count.clicks)
+   def start_joy_thread(self):
+       Thread(target=self.joy_update, daemon = True).start()
 
-    def pressed(self):
-        """
-        Function called on button touch event for button with id: testButton
-        :return: None
-        """
-        print("Callback from MainScreen.pressed()")
+   def counterButton(self):
+       self.ids.count.clicks += 1
+       self.ids.count.txt = str(self.ids.count.clicks)
 
-    def admin_action(self):
-        """
-        Hidden admin button touch event. Transitions to passCodeScreen.
-        This method is called from pidev/kivy/PassCodeScreen.kv
-        :return: None
-        """
-        SCREEN_MANAGER.current = 'passCode'
+   def pressed(self):
+       """
+       Function called on button touch event for button with id: testButton
+       :return: None
+       """
+       print("Callback from MainScreen.pressed()")
 
-    def basicAnimation(self, widget):
+   def admin_action(self):
+       """
+       Hidden admin button touch event. Transitions to passCodeScreen.
+       This method is called from pidev/kivy/PassCodeScreen.kv
+       :return: None
+       """
+       SCREEN_MANAGER.current = 'passCode'
 
-        animation = Animation(pos=(100, 100), t = 'out_bounce', duration = 1) + Animation(size=(200,200), duration=5)
-        animation.start(widget)
+   def basicAnimation(self, widget):
 
-        SCREEN_MANAGER.current = 'animated'
+       animation = Animation(pos=(100, 100), t = 'out_bounce', duration = 1) + Animation(size=(200,200), duration=5)
+       animation.start(widget)
 
-        print("bless you")
+       SCREEN_MANAGER.current = 'animated'
+
+       print("bless you")
+
 
 class ImageScreen(Screen):
 
@@ -111,11 +123,12 @@ class ImageScreen(Screen):
 
 class AnimatedButtonScreen(Screen):
 
+    Builder.load_file('AnimatedButtonScreen.kv')
+
     def complexAnimation(self, widget):
         anim = Animation(pos=(80, 10))
         anim &= Animation(size=(800, 800), duration=2.)
         anim.start(widget)
-
         SCREEN_MANAGER.current = 'main'
 
     @staticmethod
@@ -167,8 +180,6 @@ class AdminScreen(Screen):
         :return: None
         """
         quit()
-
-
 
 """
 Widget additions

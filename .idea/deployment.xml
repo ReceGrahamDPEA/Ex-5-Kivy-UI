@@ -13,7 +13,7 @@
       <paths name="pi@172.17.21.2:22 agent">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/pi/Documents/Rece" local="$PROJECT_DIR$" />
+            <mapping deploy="/home/pi/Documents/Rece/Ex-5-Kivy-UI" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

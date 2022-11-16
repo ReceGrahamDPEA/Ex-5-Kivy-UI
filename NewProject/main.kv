@@ -2,6 +2,7 @@
     #: import time __main__.time
 
     name: 'main'
+    on_enter: root.start_joy_thread()
     FloatLayout:
         size_hint: None, None
 
@@ -14,6 +15,7 @@
         step: 1
         oreintation: "horizontal"
         text: "position"
+        sensitivity: 'handle'
 
     Label:
         size: 40, 30
@@ -22,6 +24,30 @@
         y: root.height * .25
         text: str(slider.value)
         color: .5, .5, .25, 1
+
+    Label:
+        id: joy_label
+        size_hint: None, None
+        font_size: 30
+        text: str(root.joy_x_val)
+        center_x: root.width * 0.1
+        center_y: root.height * 0.1
+        color: 1, 1, 1, 1
+        bold: True
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
+
+    Label:
+        id: joy_trigger_label
+        size_hint: None, None
+        font_size: 30
+        text: ''
+        center_x: root.width * 0.1
+        center_y: root.height * 0.1
+        color: 1, 1, 1, 1
+        bold: True
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
 
         DPEAButton:
             id: btn
